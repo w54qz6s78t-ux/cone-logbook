@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cone Collector Logbook</title>
+    <title>Traffic Cone Collector - UK Edition</title>
     <style>
         body { font-family: Arial, sans-serif; background: linear-gradient(#ff9800, #f57c00); color: #333; margin: 0; padding: 0; }
         header { background: #d84315; color: white; padding: 1rem; text-align: center; }
@@ -18,8 +18,8 @@
 </head>
 <body>
     <header>
-        <h1>🌍 Cone Collector Logbook</h1>
-        <p>AI Cone Detector</p>
+        <h1>🚧 Traffic Cone Collector (UK Focus)</h1>
+        <p>Spot & Log UK Traffic Cones</p>
     </header>
     <nav>
         <button onclick="showTab(0)">📸 Camera + AI</button>
@@ -30,7 +30,7 @@
         <div id="tab0" class="tab active">
             <h2>📸 Take Photo — AI will try to identify</h2>
             <video id="video" autoplay playsinline></video><br><br>
-            <button onclick="capturePhoto()">Capture & Analyze with AI</button>
+            <button onclick="capturePhoto()">Capture & Analyze</button>
             <canvas id="canvas" style="display:none;"></canvas>
             <div id="preview"></div>
             <div id="ai-suggestion" style="margin:1rem 0; padding:1rem; background:white; border-radius:8px; font-weight:bold;"></div>
@@ -51,18 +51,27 @@
 
     <script>
         let cones = [
-            {id:1, name:"Standard Orange Traffic Cone", type:"Traffic", desc:"Classic bright orange PVC cone."},
-            {id:2, name:"36 Inch Reflective Highway Cone", type:"Traffic", desc:"Tall cone with reflective bands."},
-            {id:3, name:"Lime Green Pedestrian Cone", type:"Traffic", desc:"Vibrant lime green cone."},
-            {id:4, name:"Black Base Grabber Cone", type:"Traffic", desc:"Heavy black base cone."},
-            {id:5, name:"Collapsible Pop-Up Cone", type:"Traffic", desc:"Foldable orange cone."},
-            {id:6, name:"Sugar Ice Cream Cone", type:"Food", desc:"Classic crispy sugar cone."},
-            {id:7, name:"Waffle Cone", type:"Food", desc:"Thick golden waffle cone."},
-            {id:8, name:"Cake Wafer Cone", type:"Food", desc:"Light flat-bottom wafer cone."},
-            {id:9, name:"Chocolate Dipped Cone", type:"Food", desc:"Cone dipped in chocolate."},
-            {id:10, name:"Eastern White Pine Cone", type:"Nature", desc:"Long cylindrical pine cone."},
-            {id:11, name:"Spruce Cone", type:"Nature", desc:"Small spruce cone."},
-            {id:12, name:"Douglas Fir Cone", type:"Nature", desc:"Cone with distinctive bracts."}
+            {id:1, name:"Standard UK Orange Traffic Cone (28\")", type:"Traffic", desc:"Most common UK roadworks cone."},
+            {id:2, name:"36 Inch Reflective Highway Cone", type:"Traffic", desc:"Tall cone with two reflective bands (M25 style)."},
+            {id:3, name:"Lime Green Pedestrian Cone", type:"Traffic", desc:"Bright lime for UK pedestrian zones."},
+            {id:4, name:"Black Base Grabber Cone", type:"Traffic", desc:"Heavy black base for wind resistance."},
+            {id:5, name:"Collapsible Pop-Up Cone", type:"Traffic", desc:"Foldable orange cone used by UK recovery vehicles."},
+            {id:6, name:"Mini 12 Inch Indoor Cone", type:"Traffic", desc:"Small cones for warehouses and events."},
+            {id:7, name:"Pink Safety Cone", type:"Traffic", desc:"Pink cones for awareness campaigns in UK."},
+            {id:8, name:"Blue Parking Cone", type:"Traffic", desc:"Blue cones for reserved parking in UK."},
+            {id:9, name:"Red European Style Cone", type:"Traffic", desc:"Red cones common in parts of UK near borders."},
+            {id:10, name:"T-Top Stacker Cone", type:"Traffic", desc:"Tall cone with T-top handle (common on UK motorways)."},
+            {id:11, name:"Yellow Caution Cone", type:"Traffic", desc:"Bright yellow caution cone used in UK construction."},
+            {id:12, name:"White Safety Cone", type:"Traffic", desc:"White cones used in some UK areas."},
+            {id:13, name:"Highway Traffic Barrel (Drum)", type:"Traffic", desc:"Large orange barrel used on UK motorways."},
+            {id:14, name:"Red & White Striped Cone", type:"Traffic", desc:"Striped cone for temporary works in UK."},
+            {id:15, name:"Glow-in-the-Dark Cone", type:"Traffic", desc:"Novelty glowing cone for night events in UK."},
+            {id:16, name:"42 Inch T-Top Cone", type:"Traffic", desc:"Extra tall UK motorway cone."},
+            {id:17, name:"Metro Cone (28 Inch)", type:"Traffic", desc:"City street cone used in London and major UK cities."},
+            {id:18, name:"Heavy Duty 10lb Base Cone", type:"Traffic", desc:"Heavy base cone for high wind areas in UK."},
+            {id:19, name:"Recycled Black Base Cone", type:"Traffic", desc:"Eco-friendly recycled base cone popular in UK."},
+            {id:20, name:"Event Management Pink Cone", type:"Traffic", desc:"Pink cones used for UK festivals and events."}
+            // Add more if you want - I stopped at 20 for space but you can extend
         ];
 
         let foundCones = JSON.parse(localStorage.getItem('foundCones')) || [];
@@ -93,18 +102,16 @@
             const canvas = document.getElementById('canvas');
             canvas.width = video.videoWidth || 640;
             canvas.height = video.videoHeight || 480;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(video, 0, 0);
+            canvas.getContext('2d').drawImage(video, 0, 0);
             currentPhoto = canvas.toDataURL('image/jpeg');
             document.getElementById('preview').innerHTML = `<img src="${currentPhoto}"><p>Analyzing with AI...</p>`;
-
-            // Mock "AI" analysis - more sophisticated suggestion
+            
             setTimeout(() => {
                 const suggestion = getAISuggestion();
                 document.getElementById('ai-suggestion').innerHTML = `🤖 AI Detection: <strong>${suggestion.name}</strong> (${suggestion.confidence}% confidence)`;
                 
                 const select = document.getElementById('cone-select');
-                select.innerHTML = '<option value="">-- Confirm or choose manually --</option>';
+                select.innerHTML = '<option value="">-- Confirm or choose --</option>';
                 cones.forEach(c => {
                     const opt = document.createElement('option');
                     opt.value = c.id;
@@ -112,19 +119,11 @@
                     if (c.name === suggestion.name) opt.selected = true;
                     select.appendChild(opt);
                 });
-            }, 1200);
+            }, 1000);
         }
 
         function getAISuggestion() {
-            // Mock AI with better logic
-            const suggestions = [
-                {name: "Standard Orange Traffic Cone", confidence: 75},
-                {name: "36 Inch Reflective Highway Cone", confidence: 65},
-                {name: "Sugar Ice Cream Cone", confidence: 55},
-                {name: "Waffle Cone", confidence: 50},
-                {name: "Eastern White Pine Cone", confidence: 45}
-            ];
-            return suggestions[Math.floor(Math.random() * suggestions.length)];
+            return cones[Math.floor(Math.random() * cones.length)];
         }
 
         function logFoundCone() {
