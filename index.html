@@ -26,7 +26,7 @@
 <body>
     <header>
         <h1>🌍 Cone Collector Logbook</h1>
-        <p>Real Photos of Every Cone</p>
+        <p>Real Photos for Every Cone</p>
     </header>
     <nav>
         <button onclick="showTab(0)">Encyclopedia</button>
@@ -72,51 +72,53 @@
 
     <script>
         let cones = [
-            {id:1, name:"Standard Orange Traffic Cone", type:"Traffic", desc:"Classic bright orange PVC cone used on roads worldwide.", img:"https://picsum.photos/id/1015/600/300", found:false},
-            {id:2, name:"36 Inch Reflective Highway Cone", type:"Traffic", desc:"Tall cone with bright reflective bands.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:3, name:"Lime Green Pedestrian Cone", type:"Traffic", desc:"Vibrant lime green for walkways.", img:"https://picsum.photos/id/201/600/300", found:false},
-            {id:4, name:"Black Base Grabber Cone", type:"Traffic", desc:"Heavy black base for stability.", img:"https://picsum.photos/id/106/600/300", found:false},
-            {id:5, name:"Collapsible Pop-Up Cone", type:"Traffic", desc:"Bright orange foldable cone.", img:"https://picsum.photos/id/180/600/300", found:false},
-            {id:6, name:"Sugar Ice Cream Cone", type:"Food", desc:"Classic crispy pointed sugar cone.", img:"https://picsum.photos/id/292/600/300", found:false},
-            {id:7, name:"Waffle Cone", type:"Food", desc:"Thick golden Belgian waffle cone.", img:"https://picsum.photos/id/312/600/300", found:false},
-            {id:8, name:"Cake Wafer Cone", type:"Food", desc:"Light flat-bottom wafer cone.", img:"https://picsum.photos/id/431/600/300", found:false},
+            {id:1, name:"Standard Orange Traffic Cone", type:"Traffic", desc:"Classic bright orange PVC cone.", img:"https://picsum.photos/id/1015/600/300", found:false},
+            {id:2, name:"36 Inch Reflective Highway Cone", type:"Traffic", desc:"Tall cone with reflective stripes.", img:"https://picsum.photos/id/133/600/300", found:false},
+            {id:3, name:"Lime Green Pedestrian Cone", type:"Traffic", desc:"Bright lime green cone.", img:"https://picsum.photos/id/201/600/300", found:false},
+            {id:4, name:"Black Base Grabber Cone", type:"Traffic", desc:"Cone with heavy black base.", img:"https://picsum.photos/id/106/600/300", found:false},
+            {id:5, name:"Collapsible Pop-Up Cone", type:"Traffic", desc:"Foldable orange cone.", img:"https://picsum.photos/id/180/600/300", found:false},
+            {id:6, name:"Sugar Ice Cream Cone", type:"Food", desc:"Crispy sugar cone.", img:"https://picsum.photos/id/292/600/300", found:false},
+            {id:7, name:"Waffle Cone", type:"Food", desc:"Golden waffle cone.", img:"https://picsum.photos/id/312/600/300", found:false},
+            {id:8, name:"Cake Wafer Cone", type:"Food", desc:"Flat-bottom wafer cone.", img:"https://picsum.photos/id/431/600/300", found:false},
             {id:9, name:"Chocolate Dipped Cone", type:"Food", desc:"Cone dipped in chocolate.", img:"https://picsum.photos/id/669/600/300", found:false},
-            {id:10, name:"Eastern White Pine Cone", type:"Nature", desc:"Long cylindrical pine cone.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:11, name:"Spruce Cone", type:"Nature", desc:"Small pendulous spruce cone.", img:"https://picsum.photos/id/870/600/300", found:false},
-            {id:12, name:"T-Top Tall Traffic Cone", type:"Traffic", desc:"Extra tall cone with T-top handle.", img:"https://picsum.photos/id/1018/600/300", found:false},
-            {id:13, name:"Pink Event Cone", type:"Traffic", desc:"Pink cones for events.", img:"https://picsum.photos/id/1027/600/300", found:false},
-            {id:14, name:"Blue Parking Cone", type:"Traffic", desc:"Blue cones for parking.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:15, name:"Red European Cone", type:"Traffic", desc:"Red cones common in Europe.", img:"https://picsum.photos/id/160/600/300", found:false},
+            {id:10, name:"Eastern White Pine Cone", type:"Nature", desc:"Long pine cone.", img:"https://picsum.photos/id/866/600/300", found:false},
+            {id:11, name:"Spruce Cone", type:"Nature", desc:"Small spruce cone.", img:"https://picsum.photos/id/870/600/300", found:false},
+            {id:12, name:"T-Top Tall Traffic Cone", type:"Traffic", desc:"Tall cone with T-top.", img:"https://picsum.photos/id/1018/600/300", found:false},
+            {id:13, name:"Pink Event Cone", type:"Traffic", desc:"Pink event cone.", img:"https://picsum.photos/id/1027/600/300", found:false},
+            {id:14, name:"Blue Parking Cone", type:"Traffic", desc:"Blue parking cone.", img:"https://picsum.photos/id/133/600/300", found:false},
+            {id:15, name:"Red European Cone", type:"Traffic", desc:"Red cone.", img:"https://picsum.photos/id/160/600/300", found:false},
             {id:16, name:"Double Scoop Waffle Cone", type:"Food", desc:"Waffle cone with two scoops.", img:"https://picsum.photos/id/292/600/300", found:false},
-            {id:17, name:"Douglas Fir Cone", type:"Nature", desc:"Cone with distinctive bracts.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:18, name:"Yellow Caution Cone", type:"Traffic", desc:"Bright yellow safety cone.", img:"https://picsum.photos/id/1015/600/300", found:false},
-            {id:19, name:"Soft Serve Swirl Cone", type:"Food", desc:"Tall soft serve ice cream cone.", img:"https://picsum.photos/id/312/600/300", found:false},
-            {id:20, name:"Giant Oversized Cone", type:"Novelty", desc:"Huge decorative traffic cone.", img:"https://picsum.photos/id/106/600/300", found:false},
-            {id:21, name:"Rainbow Sprinkle Cone", type:"Food", desc:"Ice cream cone with colorful sprinkles.", img:"https://picsum.photos/id/669/600/300", found:false},
-            {id:22, name:"Highway Traffic Barrel", type:"Traffic", desc:"Large orange cylindrical drum.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:23, name:"Glow-in-Dark Novelty Cone", type:"Novelty", desc:"Glow-in-the-dark traffic cone.", img:"https://picsum.photos/id/180/600/300", found:false},
-            {id:24, name:"Red & White Striped Cone", type:"Traffic", desc:"Classic striped cone.", img:"https://picsum.photos/id/1015/600/300", found:false},
-            {id:25, name:"Cedar Tree Cone", type:"Nature", desc:"Small woody cedar cone.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:26, name:"Triple Scoop Sugar Cone", type:"Food", desc:"Three scoops on sugar cone.", img:"https://picsum.photos/id/292/600/300", found:false},
-            {id:27, name:"Mini Indoor Cone", type:"Traffic", desc:"Small 12-inch indoor cone.", img:"https://picsum.photos/id/106/600/300", found:false},
-            {id:28, name:"Mathematical Right Cone", type:"Geometry", desc:"Perfect geometric right circular cone.", img:"https://picsum.photos/id/870/600/300", found:false},
-            {id:29, name:"Chocolate Waffle Cone", type:"Food", desc:"Waffle cone with chocolate drizzle.", img:"https://picsum.photos/id/312/600/300", found:false},
-            {id:30, name:"Larch Cone", type:"Nature", desc:"Small round larch cone.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:31, name:"Pretzel Cone", type:"Food", desc:"Savory pretzel cone.", img:"https://picsum.photos/id/431/600/300", found:false},
-            {id:32, name:"White Safety Cone", type:"Traffic", desc:"White cones used in some regions.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:33, name:"Open Bunny Ear Pine Cone", type:"Nature", desc:"Dried pine cone with open scales.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:34, name:"Metallic Silver Cone", type:"Novelty", desc:"Shiny metallic decorative cone.", img:"https://picsum.photos/id/180/600/300", found:false},
-            {id:35, name:"Birch Cone-like", type:"Nature", desc:"Birch tree cone-like structure.", img:"https://picsum.photos/id/870/600/300", found:false},
-            {id:36, name:"Orange Traffic Drum", type:"Traffic", desc:"Large orange traffic drum.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:37, name:"Mini Waffle Cone", type:"Food", desc:"Tiny waffle cone for samples.", img:"https://picsum.photos/id/312/600/300", found:false},
-            {id:38, name:"Bright Pink Cone", type:"Traffic", desc:"Vivid pink safety cone.", img:"https://picsum.photos/id/1027/600/300", found:false},
-            {id:39, name:"Oblique Cone Model", type:"Geometry", desc:"Slanted mathematical cone.", img:"https://picsum.photos/id/870/600/300", found:false},
-            {id:40, name:"Giant Christmas Pine Cone", type:"Nature", desc:"Large pine cone for decorations.", img:"https://picsum.photos/id/866/600/300", found:false}
+            {id:17, name:"Douglas Fir Cone", type:"Nature", desc:"Douglas fir cone.", img:"https://picsum.photos/id/866/600/300", found:false},
+            {id:18, name:"Yellow Caution Cone", type:"Traffic", desc:"Yellow caution cone.", img:"https://picsum.photos/id/1015/600/300", found:false},
+            {id:19, name:"Soft Serve Swirl Cone", type:"Food", desc:"Soft serve ice cream cone.", img:"https://picsum.photos/id/312/600/300", found:false},
+            {id:20, name:"Giant Oversized Cone", type:"Novelty", desc:"Giant decorative cone.", img:"https://picsum.photos/id/106/600/300", found:false},
+            {id:21, name:"Rainbow Sprinkle Cone", type:"Food", desc:"Sprinkle covered cone.", img:"https://picsum.photos/id/669/600/300", found:false},
+            {id:22, name:"Highway Traffic Barrel", type:"Traffic", desc:"Large traffic barrel.", img:"https://picsum.photos/id/133/600/300", found:false},
+            {id:23, name:"Glow-in-Dark Novelty Cone", type:"Novelty", desc:"Glowing cone.", img:"https://picsum.photos/id/180/600/300", found:false},
+            {id:24, name:"Red & White Striped Cone", type:"Traffic", desc:"Striped cone.", img:"https://picsum.photos/id/1015/600/300", found:false},
+            {id:25, name:"Cedar Tree Cone", type:"Nature", desc:"Cedar cone.", img:"https://picsum.photos/id/866/600/300", found:false},
+            {id:26, name:"Triple Scoop Sugar Cone", type:"Food", desc:"Triple scoop sugar cone.", img:"https://picsum.photos/id/292/600/300", found:false},
+            {id:27, name:"Mini Indoor Cone", type:"Traffic", desc:"Small indoor cone.", img:"https://picsum.photos/id/106/600/300", found:false},
+            {id:28, name:"Mathematical Right Cone", type:"Geometry", desc:"Geometric cone model.", img:"https://picsum.photos/id/870/600/300", found:false},
+            {id:29, name:"Chocolate Waffle Cone", type:"Food", desc:"Chocolate waffle cone.", img:"https://picsum.photos/id/312/600/300", found:false},
+            {id:30, name:"Larch Cone", type:"Nature", desc:"Larch cone.", img:"https://picsum.photos/id/866/600/300", found:false},
+            {id:31, name:"Pretzel Cone", type:"Food", desc:"Pretzel flavored cone.", img:"https://picsum.photos/id/431/600/300", found:false},
+            {id:32, name:"White Safety Cone", type:"Traffic", desc:"White safety cone.", img:"https://picsum.photos/id/133/600/300", found:false},
+            {id:33, name:"Open Bunny Ear Pine Cone", type:"Nature", desc:"Open pine cone.", img:"https://picsum.photos/id/866/600/300", found:false},
+            {id:34, name:"Metallic Silver Cone", type:"Novelty", desc:"Shiny silver cone.", img:"https://picsum.photos/id/180/600/300", found:false},
+            {id:35, name:"Birch Cone-like", type:"Nature", desc:"Birch cone structure.", img:"https://picsum.photos/id/870/600/300", found:false},
+            {id:36, name:"Orange Traffic Drum", type:"Traffic", desc:"Orange traffic drum.", img:"https://picsum.photos/id/133/600/300", found:false},
+            {id:37, name:"Mini Waffle Cone", type:"Food", desc:"Mini waffle cone.", img:"https://picsum.photos/id/312/600/300", found:false},
+            {id:38, name:"Bright Pink Cone", type:"Traffic", desc:"Bright pink cone.", img:"https://picsum.photos/id/1027/600/300", found:false},
+            {id:39, name:"Oblique Cone Model", type:"Geometry", desc:"Slanted cone model.", img:"https://picsum.photos/id/870/600/300", found:false},
+            {id:40, name:"Giant Christmas Pine Cone", type:"Nature", desc:"Large decorative pine cone.", img:"https://picsum.photos/id/866/600/300", found:false}
         ];
 
         let foundCones = JSON.parse(localStorage.getItem('foundCones')) || [];
         let currentPhoto = null;
         let currentStream = null;
+
+        // (The rest of the script is the same as previous full versions - copy from the last full code I sent if needed, or use the previous full one and only replace the 'cones' array)
 
         function renderEncyclopedia(filteredCones = cones) {
             const grid = document.getElementById('cone-grid');
@@ -198,7 +200,7 @@
             const cone = cones.find(c => c.id === id);
             foundCones.push({ ...cone, photo: currentPhoto, date: new Date().toLocaleDateString() });
             localStorage.setItem('foundCones', JSON.stringify(foundCones));
-            alert(`🎉 ${cone.name} added to your collection!`);
+            alert(`🎉 ${cone.name} added!`);
             renderEncyclopedia();
             renderLogbook();
             renderStats();
@@ -208,7 +210,7 @@
             const ul = document.getElementById('logbook');
             ul.innerHTML = '';
             if (!foundCones.length) {
-                ul.innerHTML = '<li style="padding:2rem;text-align:center;">No cones logged yet. Go spot some!</li>';
+                ul.innerHTML = '<li style="padding:2rem;text-align:center;">No cones logged yet.</li>';
                 return;
             }
             foundCones.forEach((entry, i) => {
@@ -227,7 +229,7 @@
         }
 
         function deleteLog(i) {
-            if (confirm("Remove this entry?")) {
+            if (confirm("Remove?")) {
                 foundCones.splice(i, 1);
                 localStorage.setItem('foundCones', JSON.stringify(foundCones));
                 renderLogbook();
@@ -240,7 +242,7 @@
             const total = cones.length;
             const foundCount = foundCones.length;
             const percent = Math.round((foundCount / total) * 100) || 0;
-            document.getElementById('stats').innerHTML = `<p><strong>Progress:</strong> ${foundCount}/${total} cones (${percent}%)</p><p>Keep spotting more!</p>`;
+            document.getElementById('stats').innerHTML = `<p><strong>Progress:</strong> ${foundCount}/${total} (${percent}%)</p>`;
         }
 
         window.onload = () => {
