@@ -15,8 +15,8 @@
         .cone-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; }
         .cone-card { background: white; border-radius: 12px; padding: 1rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; transition: transform 0.2s; }
         .cone-card:hover { transform: scale(1.05); }
-        .cone-card.locked { opacity: 0.75; filter: grayscale(70%); }
-        .cone-card img { width: 100%; height: 190px; object-fit: cover; border-radius: 10px; }
+        .cone-card.locked { opacity: 0.8; }
+        .cone-card img { width: 100%; height: 190px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 100; }
         .modal-content { background: white; padding: 2rem; border-radius: 16px; max-width: 90%; max-height: 90%; overflow: auto; text-align: center; }
         video, canvas, #preview img { max-width: 100%; border-radius: 12px; }
@@ -26,7 +26,7 @@
 <body>
     <header>
         <h1>🌍 Cone Collector Logbook</h1>
-        <p>Real Photos for Every Cone</p>
+        <p>Take photos to unlock your own pictures</p>
     </header>
     <nav>
         <button onclick="showTab(0)">Encyclopedia</button>
@@ -64,7 +64,7 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <h2 id="modal-title"></h2>
-            <img id="modal-img" style="max-height:420px; border-radius:12px;">
+            <img id="modal-img" style="max-height:420px; border-radius:12px; display:none;">
             <p id="modal-desc"></p>
             <button onclick="closeModal()">Close</button>
         </div>
@@ -72,81 +72,59 @@
 
     <script>
         let cones = [
-            {id:1, name:"Standard Orange Traffic Cone", type:"Traffic", desc:"Classic bright orange PVC cone.", img:"https://picsum.photos/id/1015/600/300", found:false},
-            {id:2, name:"36 Inch Reflective Highway Cone", type:"Traffic", desc:"Tall cone with reflective stripes.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:3, name:"Lime Green Pedestrian Cone", type:"Traffic", desc:"Bright lime green cone.", img:"https://picsum.photos/id/201/600/300", found:false},
-            {id:4, name:"Black Base Grabber Cone", type:"Traffic", desc:"Cone with heavy black base.", img:"https://picsum.photos/id/106/600/300", found:false},
-            {id:5, name:"Collapsible Pop-Up Cone", type:"Traffic", desc:"Foldable orange cone.", img:"https://picsum.photos/id/180/600/300", found:false},
-            {id:6, name:"Sugar Ice Cream Cone", type:"Food", desc:"Crispy sugar cone.", img:"https://picsum.photos/id/292/600/300", found:false},
-            {id:7, name:"Waffle Cone", type:"Food", desc:"Golden waffle cone.", img:"https://picsum.photos/id/312/600/300", found:false},
-            {id:8, name:"Cake Wafer Cone", type:"Food", desc:"Flat-bottom wafer cone.", img:"https://picsum.photos/id/431/600/300", found:false},
-            {id:9, name:"Chocolate Dipped Cone", type:"Food", desc:"Cone dipped in chocolate.", img:"https://picsum.photos/id/669/600/300", found:false},
-            {id:10, name:"Eastern White Pine Cone", type:"Nature", desc:"Long pine cone.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:11, name:"Spruce Cone", type:"Nature", desc:"Small spruce cone.", img:"https://picsum.photos/id/870/600/300", found:false},
-            {id:12, name:"T-Top Tall Traffic Cone", type:"Traffic", desc:"Tall cone with T-top.", img:"https://picsum.photos/id/1018/600/300", found:false},
-            {id:13, name:"Pink Event Cone", type:"Traffic", desc:"Pink event cone.", img:"https://picsum.photos/id/1027/600/300", found:false},
-            {id:14, name:"Blue Parking Cone", type:"Traffic", desc:"Blue parking cone.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:15, name:"Red European Cone", type:"Traffic", desc:"Red cone.", img:"https://picsum.photos/id/160/600/300", found:false},
-            {id:16, name:"Double Scoop Waffle Cone", type:"Food", desc:"Waffle cone with two scoops.", img:"https://picsum.photos/id/292/600/300", found:false},
-            {id:17, name:"Douglas Fir Cone", type:"Nature", desc:"Douglas fir cone.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:18, name:"Yellow Caution Cone", type:"Traffic", desc:"Yellow caution cone.", img:"https://picsum.photos/id/1015/600/300", found:false},
-            {id:19, name:"Soft Serve Swirl Cone", type:"Food", desc:"Soft serve ice cream cone.", img:"https://picsum.photos/id/312/600/300", found:false},
-            {id:20, name:"Giant Oversized Cone", type:"Novelty", desc:"Giant decorative cone.", img:"https://picsum.photos/id/106/600/300", found:false},
-            {id:21, name:"Rainbow Sprinkle Cone", type:"Food", desc:"Sprinkle covered cone.", img:"https://picsum.photos/id/669/600/300", found:false},
-            {id:22, name:"Highway Traffic Barrel", type:"Traffic", desc:"Large traffic barrel.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:23, name:"Glow-in-Dark Novelty Cone", type:"Novelty", desc:"Glowing cone.", img:"https://picsum.photos/id/180/600/300", found:false},
-            {id:24, name:"Red & White Striped Cone", type:"Traffic", desc:"Striped cone.", img:"https://picsum.photos/id/1015/600/300", found:false},
-            {id:25, name:"Cedar Tree Cone", type:"Nature", desc:"Cedar cone.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:26, name:"Triple Scoop Sugar Cone", type:"Food", desc:"Triple scoop sugar cone.", img:"https://picsum.photos/id/292/600/300", found:false},
-            {id:27, name:"Mini Indoor Cone", type:"Traffic", desc:"Small indoor cone.", img:"https://picsum.photos/id/106/600/300", found:false},
-            {id:28, name:"Mathematical Right Cone", type:"Geometry", desc:"Geometric cone model.", img:"https://picsum.photos/id/870/600/300", found:false},
-            {id:29, name:"Chocolate Waffle Cone", type:"Food", desc:"Chocolate waffle cone.", img:"https://picsum.photos/id/312/600/300", found:false},
-            {id:30, name:"Larch Cone", type:"Nature", desc:"Larch cone.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:31, name:"Pretzel Cone", type:"Food", desc:"Pretzel flavored cone.", img:"https://picsum.photos/id/431/600/300", found:false},
-            {id:32, name:"White Safety Cone", type:"Traffic", desc:"White safety cone.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:33, name:"Open Bunny Ear Pine Cone", type:"Nature", desc:"Open pine cone.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:34, name:"Metallic Silver Cone", type:"Novelty", desc:"Shiny silver cone.", img:"https://picsum.photos/id/180/600/300", found:false},
-            {id:35, name:"Birch Cone-like", type:"Nature", desc:"Birch cone structure.", img:"https://picsum.photos/id/870/600/300", found:false},
-            {id:36, name:"Orange Traffic Drum", type:"Traffic", desc:"Orange traffic drum.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:37, name:"Mini Waffle Cone", type:"Food", desc:"Mini waffle cone.", img:"https://picsum.photos/id/312/600/300", found:false},
-            {id:38, name:"Bright Pink Cone", type:"Traffic", desc:"Bright pink cone.", img:"https://picsum.photos/id/1027/600/300", found:false},
-            {id:39, name:"Oblique Cone Model", type:"Geometry", desc:"Slanted cone model.", img:"https://picsum.photos/id/870/600/300", found:false},
-            {id:40, name:"Giant Christmas Pine Cone", type:"Nature", desc:"Large decorative pine cone.", img:"https://picsum.photos/id/866/600/300", found:false}
+            {id:1, name:"Standard Orange Traffic Cone", type:"Traffic", desc:"Classic bright orange PVC cone used on roads worldwide.", found:false},
+            {id:2, name:"36 Inch Reflective Highway Cone", type:"Traffic", desc:"Tall cone with bright reflective bands for night visibility.", found:false},
+            {id:3, name:"Lime Green Pedestrian Cone", type:"Traffic", desc:"Vibrant lime green cone for walkways and events.", found:false},
+            {id:4, name:"Black Base Grabber Cone", type:"Traffic", desc:"Heavy black base for stability in wind.", found:false},
+            {id:5, name:"Collapsible Pop-Up Cone", type:"Traffic", desc:"Bright orange foldable cone for easy storage.", found:false},
+            {id:6, name:"Sugar Ice Cream Cone", type:"Food", desc:"Classic crispy pointed sugar cone.", found:false},
+            {id:7, name:"Waffle Cone", type:"Food", desc:"Thick golden Belgian-style waffle cone.", found:false},
+            {id:8, name:"Cake Wafer Cone", type:"Food", desc:"Light flat-bottom wafer cone for soft serve.", found:false},
+            {id:9, name:"Chocolate Dipped Cone", type:"Food", desc:"Cone dipped in chocolate.", found:false},
+            {id:10, name:"Eastern White Pine Cone", type:"Nature", desc:"Long cylindrical pine cone.", found:false},
+            {id:11, name:"Spruce Cone", type:"Nature", desc:"Small pendulous spruce seed cone.", found:false},
+            {id:12, name:"Douglas Fir Cone", type:"Nature", desc:"Cone with distinctive bracts.", found:false},
+            {id:13, name:"Cedar Cone", type:"Nature", desc:"Small woody cedar cones.", found:false},
+            {id:14, name:"T-Top Stacker Cone", type:"Traffic", desc:"Tall cone with T-top handle.", found:false},
+            {id:15, name:"Pink Event Cone", type:"Traffic", desc:"Pink cones for special events.", found:false},
+            {id:16, name:"Blue Parking Cone", type:"Traffic", desc:"Blue cones for reserved parking.", found:false},
+            {id:17, name:"Red European Cone", type:"Traffic", desc:"Red cones used in Europe.", found:false},
+            {id:18, name:"Yellow Caution Cone", type:"Traffic", desc:"Bright yellow caution cone.", found:false},
+            {id:19, name:"Pretzel Cone", type:"Food", desc:"Savory pretzel cone.", found:false},
+            {id:20, name:"Mini Indoor Cone", type:"Traffic", desc:"Small 12-inch indoor cone.", found:false}
         ];
 
         let foundCones = JSON.parse(localStorage.getItem('foundCones')) || [];
         let currentPhoto = null;
         let currentStream = null;
 
-        // (The rest of the script is the same as previous full versions - copy from the last full code I sent if needed, or use the previous full one and only replace the 'cones' array)
-
         function renderEncyclopedia(filteredCones = cones) {
             const grid = document.getElementById('cone-grid');
             grid.innerHTML = '';
             filteredCones.forEach(cone => {
-                const isFound = foundCones.some(f => f.id === cone.id);
+                const foundEntry = foundCones.find(f => f.id === cone.id);
                 const card = document.createElement('div');
-                card.className = `cone-card ${!isFound ? 'locked' : ''}`;
+                card.className = `cone-card ${!foundEntry ? 'locked' : ''}`;
                 card.innerHTML = `
-                    <img src="${cone.img}" alt="${cone.name}">
+                    ${foundEntry ? `<img src="${foundEntry.photo}" alt="${cone.name}">` : ''}
                     <h3>${cone.name}</h3>
                     <p><strong>${cone.type}</strong></p>
-                    ${isFound ? '<span style="color:green;">✅ Found</span>' : '<span style="color:#666;">🔒 Locked</span>'}
+                    ${foundEntry ? '<span style="color:green;">✅ Found</span>' : '<span style="color:#666;">🔒 Locked — Take a photo to unlock!</span>'}
                 `;
-                card.onclick = () => showModal(cone);
+                card.onclick = () => showModal(cone, foundEntry);
                 grid.appendChild(card);
             });
         }
 
-        function filterCones() {
-            const term = document.getElementById('search').value.toLowerCase();
-            const filtered = cones.filter(c => c.name.toLowerCase().includes(term) || c.type.toLowerCase().includes(term) || c.desc.toLowerCase().includes(term));
-            renderEncyclopedia(filtered);
-        }
-
-        function showModal(cone) {
+        function showModal(cone, foundEntry) {
             document.getElementById('modal-title').textContent = cone.name;
-            document.getElementById('modal-img').src = cone.img;
+            const img = document.getElementById('modal-img');
+            if (foundEntry) {
+                img.src = foundEntry.photo;
+                img.style.display = 'block';
+            } else {
+                img.style.display = 'none';
+            }
             document.getElementById('modal-desc').innerHTML = `<strong>Type:</strong> ${cone.type}<br><br>${cone.desc}`;
             document.getElementById('modal').style.display = 'flex';
         }
@@ -181,7 +159,7 @@
             canvas.height = video.videoHeight || 480;
             canvas.getContext('2d').drawImage(video, 0, 0);
             currentPhoto = canvas.toDataURL('image/jpeg');
-            document.getElementById('preview').innerHTML = `<img src="${currentPhoto}"><p>Photo captured! Select the cone type below.</p>`;
+            document.getElementById('preview').innerHTML = `<img src="${currentPhoto}"><p>Photo captured! Select cone type below.</p>`;
             
             const select = document.getElementById('cone-select');
             select.innerHTML = '<option value="">-- Choose matching cone --</option>';
@@ -200,7 +178,7 @@
             const cone = cones.find(c => c.id === id);
             foundCones.push({ ...cone, photo: currentPhoto, date: new Date().toLocaleDateString() });
             localStorage.setItem('foundCones', JSON.stringify(foundCones));
-            alert(`🎉 ${cone.name} added!`);
+            alert(`🎉 ${cone.name} added with your photo!`);
             renderEncyclopedia();
             renderLogbook();
             renderStats();
@@ -210,7 +188,7 @@
             const ul = document.getElementById('logbook');
             ul.innerHTML = '';
             if (!foundCones.length) {
-                ul.innerHTML = '<li style="padding:2rem;text-align:center;">No cones logged yet.</li>';
+                ul.innerHTML = '<li style="padding:2rem;text-align:center;">No cones logged yet. Go spot some!</li>';
                 return;
             }
             foundCones.forEach((entry, i) => {
@@ -229,7 +207,7 @@
         }
 
         function deleteLog(i) {
-            if (confirm("Remove?")) {
+            if (confirm("Remove this entry?")) {
                 foundCones.splice(i, 1);
                 localStorage.setItem('foundCones', JSON.stringify(foundCones));
                 renderLogbook();
@@ -242,7 +220,7 @@
             const total = cones.length;
             const foundCount = foundCones.length;
             const percent = Math.round((foundCount / total) * 100) || 0;
-            document.getElementById('stats').innerHTML = `<p><strong>Progress:</strong> ${foundCount}/${total} (${percent}%)</p>`;
+            document.getElementById('stats').innerHTML = `<p><strong>Progress:</strong> ${foundCount}/${total} cones (${percent}%)</p><p>Take photos to unlock them!</p>`;
         }
 
         window.onload = () => {
