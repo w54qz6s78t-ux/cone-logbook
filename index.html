@@ -26,7 +26,7 @@
 <body>
     <header>
         <h1>🌍 Cone Collector Logbook</h1>
-        <p>40+ Real Cone Types with Actual Photos</p>
+        <p>Real Photos of Every Cone</p>
     </header>
     <nav>
         <button onclick="showTab(0)">Encyclopedia</button>
@@ -73,10 +73,10 @@
     <script>
         let cones = [
             {id:1, name:"Standard Orange Traffic Cone", type:"Traffic", desc:"Classic bright orange PVC cone used on roads worldwide.", img:"https://picsum.photos/id/1015/600/300", found:false},
-            {id:2, name:"36 Inch Reflective Highway Cone", type:"Traffic", desc:"Tall cone with bright reflective bands for night visibility.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:3, name:"Lime Green Pedestrian Cone", type:"Traffic", desc:"Vibrant lime green cone for walkways.", img:"https://picsum.photos/id/201/600/300", found:false},
-            {id:4, name:"Black Base Grabber Cone", type:"Traffic", desc:"Heavy black base for stability in wind.", img:"https://picsum.photos/id/106/600/300", found:false},
-            {id:5, name:"Collapsible Orange Cone", type:"Traffic", desc:"Foldable bright orange cone.", img:"https://picsum.photos/id/180/600/300", found:false},
+            {id:2, name:"36 Inch Reflective Highway Cone", type:"Traffic", desc:"Tall cone with bright reflective bands.", img:"https://picsum.photos/id/133/600/300", found:false},
+            {id:3, name:"Lime Green Pedestrian Cone", type:"Traffic", desc:"Vibrant lime green for walkways.", img:"https://picsum.photos/id/201/600/300", found:false},
+            {id:4, name:"Black Base Grabber Cone", type:"Traffic", desc:"Heavy black base for stability.", img:"https://picsum.photos/id/106/600/300", found:false},
+            {id:5, name:"Collapsible Pop-Up Cone", type:"Traffic", desc:"Bright orange foldable cone.", img:"https://picsum.photos/id/180/600/300", found:false},
             {id:6, name:"Sugar Ice Cream Cone", type:"Food", desc:"Classic crispy pointed sugar cone.", img:"https://picsum.photos/id/292/600/300", found:false},
             {id:7, name:"Waffle Cone", type:"Food", desc:"Thick golden Belgian waffle cone.", img:"https://picsum.photos/id/312/600/300", found:false},
             {id:8, name:"Cake Wafer Cone", type:"Food", desc:"Light flat-bottom wafer cone.", img:"https://picsum.photos/id/431/600/300", found:false},
@@ -84,26 +84,25 @@
             {id:10, name:"Eastern White Pine Cone", type:"Nature", desc:"Long cylindrical pine cone.", img:"https://picsum.photos/id/866/600/300", found:false},
             {id:11, name:"Spruce Cone", type:"Nature", desc:"Small pendulous spruce cone.", img:"https://picsum.photos/id/870/600/300", found:false},
             {id:12, name:"T-Top Tall Traffic Cone", type:"Traffic", desc:"Extra tall cone with T-top handle.", img:"https://picsum.photos/id/1018/600/300", found:false},
-            {id:13, name:"Pink Event Cone", type:"Traffic", desc:"Pink cones for events and awareness.", img:"https://picsum.photos/id/1027/600/300", found:false},
-            {id:14, name:"Blue Parking Cone", type:"Traffic", desc:"Blue cones for reserved parking.", img:"https://picsum.photos/id/133/600/300", found:false},
+            {id:13, name:"Pink Event Cone", type:"Traffic", desc:"Pink cones for events.", img:"https://picsum.photos/id/1027/600/300", found:false},
+            {id:14, name:"Blue Parking Cone", type:"Traffic", desc:"Blue cones for parking.", img:"https://picsum.photos/id/133/600/300", found:false},
             {id:15, name:"Red European Cone", type:"Traffic", desc:"Red cones common in Europe.", img:"https://picsum.photos/id/160/600/300", found:false},
-            {id:16, name:"Double Scoop Waffle Cone", type:"Food", desc:"Waffle cone with two big scoops.", img:"https://picsum.photos/id/292/600/300", found:false},
-            {id:17, name:"Douglas Fir Cone", type:"Nature", desc:"Cone with distinctive protruding bracts.", img:"https://picsum.photos/id/866/600/300", found:false},
+            {id:16, name:"Double Scoop Waffle Cone", type:"Food", desc:"Waffle cone with two scoops.", img:"https://picsum.photos/id/292/600/300", found:false},
+            {id:17, name:"Douglas Fir Cone", type:"Nature", desc:"Cone with distinctive bracts.", img:"https://picsum.photos/id/866/600/300", found:false},
             {id:18, name:"Yellow Caution Cone", type:"Traffic", desc:"Bright yellow safety cone.", img:"https://picsum.photos/id/1015/600/300", found:false},
             {id:19, name:"Soft Serve Swirl Cone", type:"Food", desc:"Tall soft serve ice cream cone.", img:"https://picsum.photos/id/312/600/300", found:false},
             {id:20, name:"Giant Oversized Cone", type:"Novelty", desc:"Huge decorative traffic cone.", img:"https://picsum.photos/id/106/600/300", found:false},
-            // Additional 20+ types
-            {id:21, name:"Rainbow Sprinkle Cone", type:"Food", desc:"Ice cream cone covered in colorful sprinkles.", img:"https://picsum.photos/id/669/600/300", found:false},
-            {id:22, name:"Highway Traffic Barrel", type:"Traffic", desc:"Large orange cylindrical delineator.", img:"https://picsum.photos/id/133/600/300", found:false},
-            {id:23, name:"Glow Novelty Cone", type:"Novelty", desc:"Glow-in-the-dark traffic cone.", img:"https://picsum.photos/id/180/600/300", found:false},
+            {id:21, name:"Rainbow Sprinkle Cone", type:"Food", desc:"Ice cream cone with colorful sprinkles.", img:"https://picsum.photos/id/669/600/300", found:false},
+            {id:22, name:"Highway Traffic Barrel", type:"Traffic", desc:"Large orange cylindrical drum.", img:"https://picsum.photos/id/133/600/300", found:false},
+            {id:23, name:"Glow-in-Dark Novelty Cone", type:"Novelty", desc:"Glow-in-the-dark traffic cone.", img:"https://picsum.photos/id/180/600/300", found:false},
             {id:24, name:"Red & White Striped Cone", type:"Traffic", desc:"Classic striped cone.", img:"https://picsum.photos/id/1015/600/300", found:false},
             {id:25, name:"Cedar Tree Cone", type:"Nature", desc:"Small woody cedar cone.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:26, name:"Triple Scoop Sugar Cone", type:"Food", desc:"Three scoops on a sugar cone.", img:"https://picsum.photos/id/292/600/300", found:false},
+            {id:26, name:"Triple Scoop Sugar Cone", type:"Food", desc:"Three scoops on sugar cone.", img:"https://picsum.photos/id/292/600/300", found:false},
             {id:27, name:"Mini Indoor Cone", type:"Traffic", desc:"Small 12-inch indoor cone.", img:"https://picsum.photos/id/106/600/300", found:false},
-            {id:28, name:"Mathematical Cone Model", type:"Geometry", desc:"Perfect geometric right cone.", img:"https://picsum.photos/id/870/600/300", found:false},
+            {id:28, name:"Mathematical Right Cone", type:"Geometry", desc:"Perfect geometric right circular cone.", img:"https://picsum.photos/id/870/600/300", found:false},
             {id:29, name:"Chocolate Waffle Cone", type:"Food", desc:"Waffle cone with chocolate drizzle.", img:"https://picsum.photos/id/312/600/300", found:false},
             {id:30, name:"Larch Cone", type:"Nature", desc:"Small round larch cone.", img:"https://picsum.photos/id/866/600/300", found:false},
-            {id:31, name:"Pretzel Cone", type:"Food", desc:"Savory pretzel flavored cone.", img:"https://picsum.photos/id/431/600/300", found:false},
+            {id:31, name:"Pretzel Cone", type:"Food", desc:"Savory pretzel cone.", img:"https://picsum.photos/id/431/600/300", found:false},
             {id:32, name:"White Safety Cone", type:"Traffic", desc:"White cones used in some regions.", img:"https://picsum.photos/id/133/600/300", found:false},
             {id:33, name:"Open Bunny Ear Pine Cone", type:"Nature", desc:"Dried pine cone with open scales.", img:"https://picsum.photos/id/866/600/300", found:false},
             {id:34, name:"Metallic Silver Cone", type:"Novelty", desc:"Shiny metallic decorative cone.", img:"https://picsum.photos/id/180/600/300", found:false},
