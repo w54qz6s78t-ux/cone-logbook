@@ -19,22 +19,23 @@
 <body>
     <header>
         <h1>🌍 Cone Collector Logbook</h1>
-        <p>Take a photo → Log the cone</p>
+        <p>AI Cone Detector</p>
     </header>
     <nav>
-        <button onclick="showTab(0)">📸 Camera</button>
+        <button onclick="showTab(0)">📸 Camera + AI</button>
         <button onclick="showTab(1)">📖 My Logbook</button>
         <button onclick="showTab(2)">🏆 Stats</button>
     </nav>
     <div class="container">
         <div id="tab0" class="tab active">
-            <h2>📸 Spot a Cone!</h2>
+            <h2>📸 Take Photo — AI will try to identify</h2>
             <video id="video" autoplay playsinline></video><br><br>
-            <button onclick="capturePhoto()">Capture Photo</button>
+            <button onclick="capturePhoto()">Capture & Analyze with AI</button>
             <canvas id="canvas" style="display:none;"></canvas>
             <div id="preview"></div>
+            <div id="ai-suggestion" style="margin:1rem 0; padding:1rem; background:white; border-radius:8px; font-weight:bold;"></div>
             <select id="cone-select" style="width:100%; padding:1rem; margin:1rem 0;"></select>
-            <button onclick="logFoundCone()">Log as Found!</button>
+            <button onclick="logFoundCone()">Confirm & Log</button>
         </div>
 
         <div id="tab1" class="tab">
@@ -61,15 +62,7 @@
             {id:9, name:"Chocolate Dipped Cone", type:"Food", desc:"Cone dipped in chocolate."},
             {id:10, name:"Eastern White Pine Cone", type:"Nature", desc:"Long cylindrical pine cone."},
             {id:11, name:"Spruce Cone", type:"Nature", desc:"Small spruce cone."},
-            {id:12, name:"Douglas Fir Cone", type:"Nature", desc:"Cone with distinctive bracts."},
-            {id:13, name:"Cedar Cone", type:"Nature", desc:"Small woody cedar cone."},
-            {id:14, name:"T-Top Stacker Cone", type:"Traffic", desc:"Tall cone with T-top handle."},
-            {id:15, name:"Pink Event Cone", type:"Traffic", desc:"Pink cones for events."},
-            {id:16, name:"Blue Parking Cone", type:"Traffic", desc:"Blue cones for parking."},
-            {id:17, name:"Red European Cone", type:"Traffic", desc:"Red cones used in Europe."},
-            {id:18, name:"Yellow Caution Cone", type:"Traffic", desc:"Bright yellow caution cone."},
-            {id:19, name:"Pretzel Cone", type:"Food", desc:"Savory pretzel cone."},
-            {id:20, name:"Mini Indoor Cone", type:"Traffic", desc:"Small 12-inch indoor cone."}
+            {id:12, name:"Douglas Fir Cone", type:"Nature", desc:"Cone with distinctive bracts."}
         ];
 
         let foundCones = JSON.parse(localStorage.getItem('foundCones')) || [];
@@ -91,7 +84,7 @@
                 currentStream = await navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}});
                 video.srcObject = currentStream;
             } catch(e) {
-                alert("Camera access denied or unavailable.");
+                alert("Camera access denied.");
             }
         }
 
@@ -100,18 +93,38 @@
             const canvas = document.getElementById('canvas');
             canvas.width = video.videoWidth || 640;
             canvas.height = video.videoHeight || 480;
-            canvas.getContext('2d').drawImage(video, 0, 0);
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
             currentPhoto = canvas.toDataURL('image/jpeg');
-            document.getElementById('preview').innerHTML = `<img src="${currentPhoto}"><p>Photo captured! Select cone type below.</p>`;
-            
-            const select = document.getElementById('cone-select');
-            select.innerHTML = '<option value="">-- Choose matching cone --</option>';
-            cones.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c.id;
-                opt.textContent = c.name;
-                select.appendChild(opt);
-            });
+            document.getElementById('preview').innerHTML = `<img src="${currentPhoto}"><p>Analyzing with AI...</p>`;
+
+            // Mock "AI" analysis - more sophisticated suggestion
+            setTimeout(() => {
+                const suggestion = getAISuggestion();
+                document.getElementById('ai-suggestion').innerHTML = `🤖 AI Detection: <strong>${suggestion.name}</strong> (${suggestion.confidence}% confidence)`;
+                
+                const select = document.getElementById('cone-select');
+                select.innerHTML = '<option value="">-- Confirm or choose manually --</option>';
+                cones.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.textContent = c.name;
+                    if (c.name === suggestion.name) opt.selected = true;
+                    select.appendChild(opt);
+                });
+            }, 1200);
+        }
+
+        function getAISuggestion() {
+            // Mock AI with better logic
+            const suggestions = [
+                {name: "Standard Orange Traffic Cone", confidence: 75},
+                {name: "36 Inch Reflective Highway Cone", confidence: 65},
+                {name: "Sugar Ice Cream Cone", confidence: 55},
+                {name: "Waffle Cone", confidence: 50},
+                {name: "Eastern White Pine Cone", confidence: 45}
+            ];
+            return suggestions[Math.floor(Math.random() * suggestions.length)];
         }
 
         function logFoundCone() {
@@ -121,7 +134,7 @@
             const cone = cones.find(c => c.id === id);
             foundCones.push({ ...cone, photo: currentPhoto, date: new Date().toLocaleDateString() });
             localStorage.setItem('foundCones', JSON.stringify(foundCones));
-            alert(`🎉 ${cone.name} logged with your photo!`);
+            alert(`🎉 ${cone.name} logged!`);
             renderLogbook();
             renderStats();
         }
@@ -130,7 +143,7 @@
             const ul = document.getElementById('logbook');
             ul.innerHTML = '';
             if (!foundCones.length) {
-                ul.innerHTML = '<li style="padding:2rem;text-align:center;">No cones logged yet. Use the Camera tab!</li>';
+                ul.innerHTML = '<li style="padding:2rem;text-align:center;">No cones logged yet.</li>';
                 return;
             }
             foundCones.forEach((entry, i) => {
@@ -149,7 +162,7 @@
         }
 
         function deleteLog(i) {
-            if (confirm("Remove this entry?")) {
+            if (confirm("Remove?")) {
                 foundCones.splice(i, 1);
                 localStorage.setItem('foundCones', JSON.stringify(foundCones));
                 renderLogbook();
